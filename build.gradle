@@ -1,0 +1,84 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    }
+    dependencies {
+        classpath "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+group 'games.rednblack'
+version '0.0.7'
+
+ext {
+    pack = ["assets/textures", "assets/pack/", "tiled"]
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    //HyperLap2D Runtime
+    implementation "games.rednblack.hyperlap2d:runtime-libgdx:$h2dVersion"
+    implementation "games.rednblack.hyperlap2d:common-api:$h2dVersion"
+
+    //Mandatory
+    implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+    implementation "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+    implementation "com.badlogicgames.ashley:ashley:$ashleyVersion"
+
+    implementation 'net.mountainblade:modular:1.0'
+
+    implementation "com.github.alyrow:box2d-light-particle:$lpVersion"
+    implementation "com.kotcrab.vis:vis-ui:$visuiVersion"
+
+    testImplementation 'com.github.Minecraftian14:Hyperlap2DPluginTester:v0.2.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.tools.texturepacker.TexturePacker
+
+task packTextures {
+    TexturePacker.Settings settings = new TexturePacker.Settings()
+    settings.legacyOutput = false
+    settings.filterMin = Texture.TextureFilter.Linear
+    settings.filterMag = Texture.TextureFilter.Linear
+    settings.duplicatePadding = true
+    if (project.ext.has('pack')) {
+        logger.info "Calling TexturePacker: " + pack
+        TexturePacker.processIfModified(settings, file(pack[0]).absolutePath, file(pack[1]).absolutePath, pack[2] as String)
+    }
+}
+
+project.ext.assetsDir = new File("assets/pack");
+
+task dist(type: Jar) {
+    from files(sourceSets.main.output.classesDirs)
+    from files(sourceSets.main.output.resourcesDir)
+    from files(project.assetsDir)
+
+    destinationDirectory = file("../build/lib/plugins")
+
+    doLast {
+        def jarToCopy = archiveFileName.get()
+        copy {
+            from "../build/lib/plugins/$jarToCopy"
+            into "../assets/plugins"
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
