@@ -8,5 +8,16 @@ com/alyrow/gdx/particle/tools/Tool_AddParticle.java
  com.alyrow.gdx.particle.tools.Tool_AddParticle
 com/alyrow/gdx/particle/tools/dub/DragTool.java
  com.alyrow.gdx.particle.tools.dub.DragTool
-com/alyrow/gdx/particle/view/gen/NAME_ME_PLS.java
- com.alyrow.gdx.particle.view.gen.NAME_ME_PLS
+com/alyrow/gdx/particle/view/ParticleSystemTable.java
+ com.alyrow.gdx.particle.view.ParticleSystemTable
+com/alyrow/gdx/particle/utilities/CUD.java
+ com.alyrow.gdx.particle.utilities.CUD
+com/alyrow/gdx/particle/utilities/Try.java
+ com.alyrow.gdx.particle.utilities.Try
+ com.alyrow.gdx.particle.utilities.Try$DirtyRunnable
+ com.alyrow.gdx.particle.utilities.Try$DirtySupplier
+com/alyrow/gdx/particle/view/gen/FieldsHunterTable.java
+ com.alyrow.gdx.particle.view.gen.FieldsHunterTable
+ com.alyrow.gdx.particle.view.gen.FieldsHunterTable$ObjectValue
+com/alyrow/gdx/particle/utilities/EasyParsers.java
+ com.alyrow.gdx.particle.utilities.EasyParsers
