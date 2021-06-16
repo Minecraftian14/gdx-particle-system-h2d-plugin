@@ -1,8 +1,11 @@
-package com.alyrow.gdx.particle.view.util;
+package com.alyrow.gdx.particle.view.subs;
 
 import com.alyrow.gdx.particle.ParticleRules;
 import com.alyrow.gdx.particle.rules.*;
 import com.alyrow.gdx.particle.utilities.EasyParsers;
+import com.alyrow.gdx.particle.view.util.CollapsibleTable;
+import com.alyrow.gdx.particle.view.util.Entry;
+import com.alyrow.gdx.particle.view.util.StaticFieldListView;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -10,13 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kotcrab.vis.ui.widget.VisCheckBox;
-import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 import com.kotcrab.vis.ui.widget.VisTextField;
 import com.kotcrab.vis.ui.widget.color.ColorPicker;
 import com.kotcrab.vis.ui.widget.color.ColorPickerAdapter;
 
-import static com.alyrow.gdx.particle.utilities.CUD.tag;
 import static com.alyrow.gdx.particle.utilities.CUD.title;
 
 

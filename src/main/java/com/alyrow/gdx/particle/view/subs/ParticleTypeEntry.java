@@ -1,6 +1,8 @@
-package com.alyrow.gdx.particle.view.util;
+package com.alyrow.gdx.particle.view.subs;
 
 import com.alyrow.gdx.particle.ParticleType;
+import com.alyrow.gdx.particle.view.util.Entry;
+import com.alyrow.gdx.particle.view.util.StaticFieldListView;
 import com.kotcrab.vis.ui.widget.VisLabel;
 
 import static com.alyrow.gdx.particle.utilities.CUD.title;

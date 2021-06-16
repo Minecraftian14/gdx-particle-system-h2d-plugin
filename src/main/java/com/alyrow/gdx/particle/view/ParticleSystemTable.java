@@ -1,6 +1,9 @@
 package com.alyrow.gdx.particle.view;
 
 import com.alyrow.gdx.particle.ParticleSystem;
+import com.alyrow.gdx.particle.view.subs.ParticlePositionEntry;
+import com.alyrow.gdx.particle.view.subs.ParticleRuleEntry;
+import com.alyrow.gdx.particle.view.subs.ParticleTypeEntry;
 import com.alyrow.gdx.particle.view.util.*;
 import com.badlogic.gdx.utils.Array;
 import com.kotcrab.vis.ui.widget.VisTable;
