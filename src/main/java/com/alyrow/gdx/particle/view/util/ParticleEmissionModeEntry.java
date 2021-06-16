@@ -31,7 +31,7 @@ public class ParticleEmissionModeEntry extends Entry<Integer> {
         value = map.values().toArray().get(0);
 
         var adapter = new SimpleListAdapter<>(map.keys().toArray());
-        var view = new ListView<>(adapter);
+        ListView<String> view = new ListView<>(adapter);
         view.setItemClickListener(this::setValue);
 
         add(view.getMainTable()).grow().space(5);

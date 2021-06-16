@@ -16,6 +16,10 @@ import com.kotcrab.vis.ui.widget.VisTextField;
 import com.kotcrab.vis.ui.widget.color.ColorPicker;
 import com.kotcrab.vis.ui.widget.color.ColorPickerAdapter;
 
+import static com.alyrow.gdx.particle.utilities.CUD.tag;
+import static com.alyrow.gdx.particle.utilities.CUD.title;
+
+
 public class ParticleRuleEntry extends Entry<ParticleRules> {
 
     // ParticleEmissionLight
@@ -35,7 +39,7 @@ public class ParticleRuleEntry extends Entry<ParticleRules> {
 
     // ParticleEmissionNumber
     private final VisCheckBox fie_isRandom;
-    private final ParticleEmissionModeEntry fie_mode;
+    private final StaticFieldListView fie_mode;
     private final VisTextField fie_seconds;
     private final VisTextField fie_min;
     private final VisTextField fie_max;
@@ -43,54 +47,36 @@ public class ParticleRuleEntry extends Entry<ParticleRules> {
 
     public ParticleRuleEntry() {
 
+        CollapsibleTable table;
+
         // ParticleEmissionLight
-        add(new VisLabel(title("EMISSION LIGHT"))).space(5).colspan(2).growX().row();
+        add(table = new CollapsibleTable(title("EMISSION LIGHT")))/*.expandX().fillX()*/.growX().row();
 
-        add(new VisLabel(tag("Number of Rays"))).space(5).growX();
-        add(fie_rays = new VisTextField()).space(5).growX().row();
-
-        add(new VisLabel(tag("Color"))).space(5).growX();
-        add(fie_color = new VisTextButton("Choose")).space(5).growX().row();
-
-        add(new VisLabel(tag("Distance"))).space(5).growX();
-        add(fie_distance = new VisTextField()).space(5).growX().row();
-
+        table.addEntry("Number of Rays", fie_rays = new VisTextField());
+        table.addEntry("Color", fie_color = new VisTextButton("Choose"));
+        table.addEntry("Distance", fie_distance = new VisTextField());
 
         // ParticleLife
-        add(new VisLabel(title("PARTICLE LIFE"))).padTop(15).space(5).colspan(2).growX().row();
+        add(table = new CollapsibleTable(title("PARTICLE LIFE"))).padTop(15).growX().row();
 
-        add(new VisLabel(tag("Life"))).space(5).growX();
-        add(fie_life = new VisTextField()).space(5).growX().row();
-
-        add(new VisLabel(tag("is Outer"))).space(5).growX();
-        add(fie_outer = new VisCheckBox(null)).space(5).growX().row();
+        table.addEntry("Life", fie_life = new VisTextField());
+        table.addEntry("is Outer", fie_outer = new VisCheckBox(null));
 
         // ParticleEmissionDuration
-        add(new VisLabel(title("EMISSION DURATION"))).padTop(15).space(5).colspan(2).growX().row();
+        add(table = new CollapsibleTable(title("EMISSION DURATION"))).padTop(15).growX().row();
 
-        add(new VisLabel(tag("Duration"))).space(5).growX();
-        add(fie_duration = new VisTextField()).space(5).growX().row();
+        table.addEntry("Duration", fie_duration = new VisTextField());
 
         // ParticleEmissionNumber
-        add(new VisLabel(title("EMISSION NUMBER"))).padTop(15).space(5).colspan(2).growX().row();
+        add(table = new CollapsibleTable(title("EMISSION NUMBER"))).padTop(15).growX().row();
 
-        add(new VisLabel(tag("is Random"))).space(5).growX();
-        add(fie_isRandom = new VisCheckBox(null)).space(5).growX().row();
+        table.addEntry("is Random", fie_isRandom = new VisCheckBox(null));
+        table.addEntry("Particle Emission", (fie_mode = new StaticFieldListView(ParticleEmissionNumber.class)).getMainTable());
+        table.addEntry("Seconds", fie_seconds = new VisTextField());
+        table.addEntry("Minimum", fie_min = new VisTextField());
+        table.addEntry("Maximum", fie_max = new VisTextField());
 
-        add(fie_mode = new ParticleEmissionModeEntry()).colspan(2).space(5).growX().row();
-
-        VisLabel lbl_seconds = new VisLabel(tag("Seconds"));
-        add(lbl_seconds).space(5).growX();
-        add(fie_seconds = new VisTextField()).space(5).growX().row();
-
-        VisLabel lbl_min = new VisLabel(tag("Minimum"));
-        add(lbl_min).space(5).growX();
-        add(fie_min = new VisTextField()).space(5).growX().row();
         fie_min.setDisabled(true);
-
-        VisLabel lbl_max = new VisLabel(tag("Maximum"));
-        add(lbl_max).space(5).growX();
-        add(fie_max = new VisTextField()).space(5).growX().row();
         fie_max.setDisabled(true);
 
         Gdx.app.postRunnable(() -> picker = new ColorPicker(new ColorPickerAdapter() {
@@ -119,15 +105,6 @@ public class ParticleRuleEntry extends Entry<ParticleRules> {
         });
 
     }
-
-    private String title(String name) {
-        return String.format("[#FFFFFF]%s[]", name);
-    }
-
-    private String tag(String name) {
-        return String.format("[#BBBBBB]%s:[]", name);
-    }
-
 
     @Override
     public ParticleRules getValue() {
