@@ -3,10 +3,12 @@ package com.alyrow.gdx.particle.view.util;
 import com.alyrow.gdx.particle.utilities.CUD;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.BaseDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Null;
 import com.kotcrab.vis.ui.widget.*;
+import com.kotcrab.vis.ui.widget.color.internal.VerticalChannelBar;
 
 import static com.alyrow.gdx.particle.utilities.CUD.tag;
 import static com.alyrow.gdx.particle.utilities.CUD.title;
@@ -27,6 +29,7 @@ public class CollapsibleTable<ValueType> extends Entry<ValueType> {
 
         CollapsibleWidget widget = new CollapsibleWidget(contentTable = new VisTable());
         add(widget).expandX().fillX().colspan(2).space(5);
+        contentTable.setFillParent(true);
 
         action.addListener(new ChangeListener() {
             @Override

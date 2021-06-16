@@ -8,13 +8,20 @@ public class NumericField extends VisTextField {
     public NumericField() {
         this(0);
     }
+
     public NumericField(float number) {
-        super(""+number);
+        super("" + number);
     }
 
     public float getFloat() {
-        int parse = EasyParsers.parse(getText().replaceAll("[\\d.]*", ""), 0);
-        setText(""+parse);
+        float parse = EasyParsers.parse(getText().replaceAll("[^\\d.,_]*", ""), 0f);
+        setText("" + parse);
+        return parse;
+    }
+
+    public int getInt() {
+        int parse = EasyParsers.parse(getText().replaceAll("[^\\d,_]*", ""), 0);
+        setText("" + parse);
         return parse;
     }
 }

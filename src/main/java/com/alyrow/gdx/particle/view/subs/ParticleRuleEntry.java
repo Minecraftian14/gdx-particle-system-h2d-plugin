@@ -5,11 +5,13 @@ import com.alyrow.gdx.particle.rules.*;
 import com.alyrow.gdx.particle.utilities.EasyParsers;
 import com.alyrow.gdx.particle.view.util.CollapsibleTable;
 import com.alyrow.gdx.particle.view.util.Entry;
+import com.alyrow.gdx.particle.view.util.NumericField;
 import com.alyrow.gdx.particle.view.util.StaticFieldListView;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.kotcrab.vis.ui.widget.VisCheckBox;
@@ -24,11 +26,11 @@ import static com.alyrow.gdx.particle.utilities.CUD.title;
 public class ParticleRuleEntry extends Entry<ParticleRules> {
 
     // ParticleEmissionLight
-    private final VisTextField fie_rays;
+    private final NumericField fie_rays;
     private final VisTextButton fie_color;
     private ColorPicker picker = null;
     private Color color;
-    private final VisTextField fie_distance;
+    private final NumericField fie_distance;
 
 
     // ParticleLife
@@ -41,41 +43,41 @@ public class ParticleRuleEntry extends Entry<ParticleRules> {
     // ParticleEmissionNumber
     private final VisCheckBox fie_isRandom;
     private final StaticFieldListView fie_mode;
-    private final VisTextField fie_seconds;
-    private final VisTextField fie_min;
-    private final VisTextField fie_max;
+    private final NumericField fie_seconds;
+    private final NumericField fie_min;
+    private final NumericField fie_max;
 
 
     public ParticleRuleEntry() {
 
-        CollapsibleTable table;
+        CollapsibleTable<?> table;
 
         // ParticleEmissionLight
-        add(table = new CollapsibleTable(title("EMISSION LIGHT")))/*.expandX().fillX()*/.growX().row();
+        add(table = new CollapsibleTable<>(title("EMISSION LIGHT")))/*.expandX().fillX()*/.growX().row();
 
-        table.addEntry("Number of Rays", fie_rays = new VisTextField());
+        table.addEntry("Number of Rays", fie_rays = new NumericField());
         table.addEntry("Color", fie_color = new VisTextButton("Choose"));
-        table.addEntry("Distance", fie_distance = new VisTextField());
+        table.addEntry("Distance", fie_distance = new NumericField());
 
         // ParticleLife
-        add(table = new CollapsibleTable(title("PARTICLE LIFE"))).padTop(15).growX().row();
+        add(table = new CollapsibleTable<>(title("PARTICLE LIFE"))).padTop(15).growX().row();
 
         table.addEntry("Life", fie_life = new VisTextField());
         table.addEntry("is Outer", fie_outer = new VisCheckBox(null));
 
         // ParticleEmissionDuration
-        add(table = new CollapsibleTable(title("EMISSION DURATION"))).padTop(15).growX().row();
+        add(table = new CollapsibleTable<>(title("EMISSION DURATION"))).padTop(15).growX().row();
 
         table.addEntry("Duration", fie_duration = new VisTextField());
 
         // ParticleEmissionNumber
-        add(table = new CollapsibleTable(title("EMISSION NUMBER"))).padTop(15).growX().row();
+        add(table = new CollapsibleTable<>(title("EMISSION NUMBER"))).padTop(15).growX().row();
 
         table.addEntry("is Random", fie_isRandom = new VisCheckBox(null));
         table.addEntry("Particle Emission", (fie_mode = new StaticFieldListView(ParticleEmissionNumber.class)).getMainTable());
-        table.addEntry("Seconds", fie_seconds = new VisTextField());
-        table.addEntry("Minimum", fie_min = new VisTextField());
-        table.addEntry("Maximum", fie_max = new VisTextField());
+        table.addEntry("Seconds", fie_seconds = new NumericField());
+        table.addEntry("Minimum", fie_min = new NumericField());
+        table.addEntry("Maximum", fie_max = new NumericField());
 
         fie_min.setDisabled(true);
         fie_max.setDisabled(true);
@@ -112,8 +114,8 @@ public class ParticleRuleEntry extends Entry<ParticleRules> {
         ParticleRules rules = new ParticleRules();
 
         rules.setLight(new ParticleEmissionLight(color) {{
-            rays = EasyParsers.parse(fie_rays.getText(), 5);
-            distance = EasyParsers.parse(fie_distance.getText(), 5f);
+            rays = fie_rays.getInt();
+            distance = fie_distance.getFloat();
         }});
 
         rules.setLife(new ParticleLife(EasyParsers.parse(fie_life.getText(), 10f), fie_outer.isChecked()));
@@ -126,9 +128,9 @@ public class ParticleRuleEntry extends Entry<ParticleRules> {
         }
 
         if (fie_isRandom.isChecked())
-            rules.setNumber(new ParticleEmissionNumberRandom(fie_mode.getValue(), EasyParsers.parse(fie_min.getText(), 0), EasyParsers.parse(fie_max.getText(), 0)));
+            rules.setNumber(new ParticleEmissionNumberRandom(fie_mode.getValue(),fie_min.getInt(), fie_max.getInt()));
         else
-            rules.setNumber(new ParticleEmissionNumber(fie_mode.getValue(), EasyParsers.parse(fie_seconds.getText(), 1)));
+            rules.setNumber(new ParticleEmissionNumber(fie_mode.getValue(), fie_seconds.getInt()));
 
         return rules;
     }

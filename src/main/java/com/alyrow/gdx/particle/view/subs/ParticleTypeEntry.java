@@ -12,7 +12,7 @@ public class ParticleTypeEntry extends Entry<Integer> {
     private StaticFieldListView view;
 
     public ParticleTypeEntry() {
-        add(new VisLabel(title("PARTICLE TYPE"))).top().space(5).growX();
+        add(new VisLabel(title("PARTICLE TYPE"))).padTop(15).top().space(5).growX();
         add((view = new StaticFieldListView(ParticleType.class)).getMainTable()).space(5).growX().row();
     }
 

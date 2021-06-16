@@ -13,7 +13,7 @@ class ParticleSystemTableTest {
         PluginTester.launchTest(DefaultConfiguration.get(400, 800), () -> Try.defaults(ParticleSystemTableTest::TestStarter));
     }
 
-    private static void TestStarter() throws NoSuchMethodException {
+    private static void TestStarter() {
         Plugin.isDebugging = true;
 
         Plugin plugin = new Plugin();
@@ -23,8 +23,8 @@ class ParticleSystemTableTest {
         simpleTest();
     }
 
-    private static void simpleTest() throws NoSuchMethodException {
-        ParticleSystemTable table = new ParticleSystemTable();
+    private static void simpleTest() {
+        ParticleSystemTable table = new ParticleSystemTable(null, null);
         PluginTester.setTable(table);
     }
 
